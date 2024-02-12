@@ -73,8 +73,59 @@ const menu = [
     },
 ];
 
-const sectionCenter = document.querySelector("center");
+const sectionCenter = document.querySelector(".section-center");
 
+const filterBtn = document.querySelectorAll(".filter-btn");
+console.log(filterBtn)
+// load items
 window.addEventListener("DOMContentLoaded", function () {
-    console.log("welcome")
+    displayMenuItems(menu)
+
 })
+
+// filter items
+filterBtn.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+        const category = e.currentTarget.dataset.id;
+        const menuCategory = menu.filter(function (menuItems) {
+            if (menu.category === category) {
+                return menuItems
+            }
+
+        })
+        // console.log(menuCategory)
+        if (category == 'all') {
+            displayMenuItems(menu)
+        } else {
+            displayMenuItems(menuCategory)
+        }
+
+    })
+
+})
+
+
+function displayMenuItems(menuItems) {
+    let displayMenu = menuItems.map(function (item) {
+        return ` <article class="menu-item">
+        <img src=${item.img} class="photo" alt=${item.title}>
+        <div class="item-info">
+            <header>
+                <h4>${item.title}</h4>
+                <h4 class="price">$${item.price}</h4>
+            </header>
+            <p class="item-text">
+                ${item.desc}
+            </p>
+
+        </div>
+    </article>`
+    })
+
+    displayMenu = displayMenu.join('')
+    sectionCenter.innerHTML = displayMenu
+
+    // console.log(displayMenu)
+
+}
+
